@@ -1,2 +1,2 @@
 # anasynth
-Analysis/Synthesis implementation for the Harmonic Band Wavelet Transform
+Analysis/Synthesis implementation of the Harmonic Band Wavelet Transform in Python.
