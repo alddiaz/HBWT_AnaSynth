@@ -4,7 +4,7 @@
 
 import numpy as np
 import scipy.signal as signal
-from libfilt import* #Biblioteca de filtragem
+from libfilt import*
 
 def wt(x, h, g, N):
 	L = h.size-1
