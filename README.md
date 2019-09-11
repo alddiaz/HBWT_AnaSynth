@@ -4,7 +4,7 @@ Analysis and Synthesis provided as separate functions.
 
 You will work with two functions called "hbwt" and "ihbwt" as follows:
 
-1. From libhbwt.py file (the direct HBWT transform, as in Section 2.2 in [1]) you will find the function hbwt(x, h, g, P, N), where:
+1. From libhbwt.py file (the direct HBWT transform, as in Section 2.2 in [1]) you will find the function hbwt(x, h, g, P, N), where:<br />
 x: input signal x(n)
 h: low pass wavelet filter coefficients (typically, a Daubechies wavelet filter of order 11).
 g: high pass wavelet filter coefficients (typically, a Daubechies wavelet filter of order 11).
