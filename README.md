@@ -5,17 +5,17 @@ Analysis and Synthesis provided as separate functions.
 You will work with two functions called "hbwt" and "ihbwt" as follows:
 
 1. From libhbwt.py file (the direct HBWT transform, as in Section 2.2 in [1]) you will find the function hbwt(x, h, g, P, N), where:<br />
-x: input signal x(n)
-h: low pass wavelet filter coefficients (typically, a Daubechies wavelet filter of order 11).
-g: high pass wavelet filter coefficients (typically, a Daubechies wavelet filter of order 11).
-P: the number of MDCT channels or "sidebands" (typically adjusted to match the period of input signal x(n) )
-N: the number of wavelet scales or "subbands".
+x: input signal x(n)<br />
+h: low pass wavelet filter coefficients (typically, a Daubechies wavelet filter of order 11).<br />
+g: high pass wavelet filter coefficients (typically, a Daubechies wavelet filter of order 11).<br />
+P: the number of MDCT channels or "sidebands" (typically adjusted to match the period of input signal x(n) )<br />
+N: the number of wavelet scales or "subbands".<br />
 
-2. From libhibwt.py file (the inverse HBWT transform, as in Section 2.3 in [1]) you will find the function ihbwt(a, b, h, g), where:
-a: wavelet filter coefficients called "scale residue" at scale N per channel p (see Eq. (7) in [1])
-b: wavelet filter coefficients called "expansion coefficients" at scales n per channel p (see Eq. (7) in [1])
-h: low pass wavelet filter coefficients (the same used in Step 1).
-g: high pass wavelet filter coefficients (the same used in Step 1)
+2. From libhibwt.py file (the inverse HBWT transform, as in Section 2.3 in [1]) you will find the function ihbwt(a, b, h, g), where:<br />
+a: wavelet filter coefficients called "scale residue" at scale N per channel p (see Eq. (7) in [1])<br />
+b: wavelet filter coefficients called "expansion coefficients" at scales n per channel p (see Eq. (7) in [1])<br />
+h: low pass wavelet filter coefficients (the same used in Step 1).<br />
+g: high pass wavelet filter coefficients (the same used in Step 1)<br />
 
 # Reference
 [1] A. Díaz and R. Mendes, “Analysis/Synthesis Of The Andean Quena Via Harmonic Band Wavelet Transform,” in Proceedings of the 18th International Conference on Digital Audio Effects (DAFx-15), 2015, pp. 1–4.
