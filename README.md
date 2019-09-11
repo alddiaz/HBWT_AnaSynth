@@ -1,6 +1,6 @@
 # HBWT_AnaSynth
-Implementation of the Harmonic Band Wavelet Transform (HBWT) in Python.
-Analysis and Synthesis provided as separate functions.
+Implementation of the Harmonic Band Wavelet Transform (HBWT) in Python.<br />
+Analysis and Synthesis modules are provided as separate functions.
 
 You will work with two functions called "hbwt" and "ihbwt" as follows:
 
