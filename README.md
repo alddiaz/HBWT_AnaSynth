@@ -2,9 +2,11 @@
 Implementation of the Harmonic Band Wavelet Transform (HBWT) in Python.<br />
 Analysis and Synthesis modules are provided as separate functions.
 
-**Please cite this paper if you use HBWT_AnaSynth in your research:**<br />
-[1] Aldo Díaz and Rafael Mendes, "Analysis/Synthesis Of The Andean Quena Via Harmonic Band Wavelet Transform", In: Proceedings of the 18th International Conference on Digital Audio Effects (DAFx-15), 2015, pp. 1–4.<br />
+**Please cite this paper and code if you use HBWT_AnaSynth in your research:**<br />
+[1] Díaz Salazar, Aldo André and Mendes, Rafael, "Analysis/Synthesis Of The Andean Quena Via Harmonic Band Wavelet Transform", In: Proceedings of the 18th International Conference on Digital Audio Effects (DAFx-15), 2015, pp. 1–4.<br />
 https://www.ntnu.edu/documents/1001201110/1266017954/DAFx-15_submission_74_v3.pdf
+<br />
+[2] Díaz Salazar, Aldo André, "HBWT_AnaSynth", Campinas, Brazil, 2015.
 <br /><br />
 You will work with two functions called "hbwt" and "ihbwt" as follows:
 
