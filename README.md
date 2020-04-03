@@ -9,8 +9,7 @@ https://www.ntnu.edu/documents/1001201110/1266017954/DAFx-15_submission_74_v3.pd
 [2] A. A. Díaz Salazar, "HBWT_AnaSynth", Campinas, Brazil, 2015.
 
 # Methods
-You will work with two functions called "hbwt" and "ihbwt" as follows:
-
+- Analysis
 1. From **libhbwt.py** file (the direct HBWT transform, as in Section 2.2 in [1]) you will find the function **hbwt(x, h, g, P, N)**, where:<br />
 x: input signal x(n)<br />
 h: low pass wavelet filter coefficients (typically, a Daubechies wavelet filter of order 11).<br />
