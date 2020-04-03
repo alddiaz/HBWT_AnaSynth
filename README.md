@@ -1,5 +1,5 @@
 # HBWT_AnaSynth
-Python implementation of the Harmonic Band Wavelet Transform (HBWT).<br />
+Python implementation of the Harmonic Band Wavelet Transform (HBWT).<br /><br />
 N.B.: Only files in **16-bit PCM** WAV format are supported!
 
 **Please cite this paper and code if you use HBWT_AnaSynth in your research:**<br />
