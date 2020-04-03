@@ -11,10 +11,10 @@ https://www.ntnu.edu/documents/1001201110/1266017954/DAFx-15_submission_74_v3.pd
 # Methods
 - Analysis step
 1. From **libhbwt.py** file (the direct HBWT transform, as in Section 2.2 in [1]) you will find the function **hbwt(x, h, g, P, N)**, where:<br />
-x: input signal x(n)<br />
-h: low pass wavelet filter coefficients (typically, a Daubechies wavelet filter of order 11).<br />
-g: high pass wavelet filter coefficients (typically, a Daubechies wavelet filter of order 11).<br />
-P: the number of MDCT channels or "sidebands" (typically adjusted to match the period of input signal x(n) )<br />
+x: input signal x[n]<br />
+h: low pass wavelet filter coefficients (e.g.,Daubechies order 11).<br />
+g: high pass wavelet filter coefficients (e.g., Daubechies order 11).<br />
+P: the number of MDCT channels or "sidebands" (matched to the period of input signal x[n])<br />
 N: the number of wavelet scales or "subbands".<br />
 
 - Synthesis step
