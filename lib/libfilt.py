@@ -1,50 +1,47 @@
-#Biblioteca de funcoes para filtragem
-#Desenvolvida por Aldo Diaz
-#Universidade Estadual de Campinas, 2015
+# Filtering library
+# Developed by Aldo Diaz
+# University of Campinas, 2015
 
-from numpy import empty,zeros,convolve
+from numpy import empty, zeros, convolve
 
-#Funcao Expansor
-def expansao(x, L):
-	#x: Sinal de entrada
-	#L: Fator de interpolacao
-	
+# Upsampling
+def upsampling(x, L):
+	# x: Input signal
+	# L: Upsampling factor
+
 	l = len(x)*L
 	y = zeros(l)
 	y[::L] = x
 	return y
 
-#Funcao Dizimador
-def dizimacao(x, M):
-	#x: Sinal de entrada
-	#M: Fator de dizimacao
-	
-	y = x[0::M] #VERIFICAR SE SAO PARES OU IMPARES
+# Downsampling
+def downsampling(x, M):
+	# x: Input signal
+	# M: Downsampling factor
+
+	y = x[0::M] # Downsampling using even indexes
 	return y
 
-#Funcao Expansao-FiltragemFIR-Dizimacao
-def exp_fir_diz(x, h, L, M):
-	#x: Sinal de entrada
-	#h: Matriz de filtragem. Cada coluna contem os coeficientes da respota ao impulso de cada filtro h_k[n]
-	#L: Fator de interpolacao
-	#M: Fator de dizimacao
-	
-	if L != 1: #Etapa de sintese
-		y = expansao(x, L) #Expansao de x em fator L
-		A = convolve(y, h) #Convolucao
-		A = A[:len(A)-(L-1)] #Descarta zeros no final
-	else: #Etapa de analise
+# Upsampling -> FIR Filtering -> Downsampling
+def up_fir_down(x, h, L, M):
+	# x: Input signal
+	# h: Filtering matrix. The columns contain the coefficients of the impulse response of each filter h_k[n]
+	# L: Upsampling factor
+	# M: Downsampling factor
+
+	if L != 1: # Synthesis step
+		y = upsampling(x, L) # Upsampling x in a factor L
+		A = convolve(y, h) # Convolution
+		A = A[:len(A)-(L-1)] # Prune ending zeros
+	else: # Analysis step
 		y = x
-		temp = convolve(y, h[:,0]) #Primeira convolucao
-		NC = len(h[0]) #Numero de colunas de h
-		NF = temp.size #Tamanho do vetor convolucao	
-		A = empty((NF,NC)) #Dimensiona a matriz A
-		A[:,0] = temp #Armazena a primeira convolucao
-		
+		temp = convolve(y, h[:,0]) # First convolution
+		NC = len(h[0]) # Number of h columns
+		NF = temp.size # Size of the convolution vector
+		A = empty((NF,NC)) # Allocate matrix A
+		A[:,0] = temp # Store the first convolution
 		for k in xrange(1,NC):
 			A[:,k] = convolve(y, h[:,k])
-	
 	if M != 1:
-		A = dizimacao(A, M) #Dizimacao de A em fator M
+		A = downsampling(A, M) # Downsampling A in factor M
 	return A
-

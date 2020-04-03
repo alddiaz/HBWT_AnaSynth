@@ -1,13 +1,14 @@
-#Biblioteca de funcoes para o calculo da HBWT
-#Desenvolvida por Aldo Diaz
-#Universidade Estadual de Campinas, 2015
+# Inverse HBWT library
+# Developed by Aldo Diaz
+# University of Campinas, 2015
 
 import numpy as np
 import scipy.signal as signal
 from libfilt import*
 
+# Discrete Wavelet Transform (DWT)
 def wt(x, h, g, N):
-	L = h.size-1
+	L = len(h)-1
 	h = h/np.linalg.norm(h)
 	g = g/np.linalg.norm(g)
 	a = np.empty((N,),dtype=object)
@@ -20,11 +21,12 @@ def wt(x, h, g, N):
 		b[k] = bb
 		x = signal.lfilter(h, 1, x)
 		x = x[1::2]
-	
+
 	a[k] = x
-	
+
 	return a, b
 
+# Cosine-Modulated Filter Bank (CMFB)
 def cmfb(x, P):
 	k = np.arange(P)
 	n = np.arange(2*P)
@@ -36,11 +38,13 @@ def cmfb(x, P):
 	argum = (2*n+P+1)*(2*k+1)*np.pi/4/P
  	coss = np.cos(argum)
 	w = np.sqrt(2.0/P)*h*coss
-	y = exp_fir_diz(x, w[::-1,:], 1, P)
+	y = up_fir_down(x, w[::-1,:], 1, P)
 
 	return y, w
 
+# Harmonic Band Wavelet Transform (HBWT)
 def hbwt(x, h, g, P, N):
+	x = x/float(pow(2,15)) # Rescaling data ('int16' type)
 	[x, w] = cmfb(x, P)
 	a = np.empty((N,P),dtype=object)
 	b = np.empty((N,P),dtype=object)

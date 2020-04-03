@@ -8,6 +8,9 @@ https://www.ntnu.edu/documents/1001201110/1266017954/DAFx-15_submission_74_v3.pd
 <br />
 [2] Díaz Salazar, Aldo André, "HBWT_AnaSynth", Campinas, Brazil, 2015.
 <br /><br />
+N.B.: Only files in **16-bit PCM** WAV format are supported
+
+# Methods
 You will work with two functions called "hbwt" and "ihbwt" as follows:
 
 1. From **libhbwt.py** file (the direct HBWT transform, as in Section 2.2 in [1]) you will find the function **hbwt(x, h, g, P, N)**, where:<br />
