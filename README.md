@@ -1,6 +1,6 @@
 # HBWT_AnaSynth
 Python implementation of the Harmonic Band Wavelet Transform (HBWT).<br />
-**N.B.:** Only files **WAV format** is supported!
+**N.B.:** Only **WAV format** files are supported!
 
 **Please cite these paper and software if you use HBWT_AnaSynth in your research:**<br />
 [1] A. A. Díaz Salazar, R. S. Mendes, "Analysis/Synthesis Of The Andean Quena Via Harmonic Band Wavelet Transform", In: Proceedings of the 18th International Conference on Digital Audio Effects (DAFx-15), 2015, pp. 1–4.<br />
