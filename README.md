@@ -9,7 +9,7 @@ https://www.ntnu.edu/documents/1001201110/1266017954/DAFx-15_submission_74_v3.pd
 [2] A. A. Díaz Salazar, "HBWT_AnaSynth", Campinas, Brazil, 2015.
 
 # Methods
-- Analysis
+- Analysis step
 1. From **libhbwt.py** file (the direct HBWT transform, as in Section 2.2 in [1]) you will find the function **hbwt(x, h, g, P, N)**, where:<br />
 x: input signal x(n)<br />
 h: low pass wavelet filter coefficients (typically, a Daubechies wavelet filter of order 11).<br />
@@ -17,6 +17,7 @@ g: high pass wavelet filter coefficients (typically, a Daubechies wavelet filter
 P: the number of MDCT channels or "sidebands" (typically adjusted to match the period of input signal x(n) )<br />
 N: the number of wavelet scales or "subbands".<br />
 
+- Synthesis step
 2. From **libhibwt.py** file (the inverse HBWT transform, as in Section 2.3 in [1]) you will find the function **ihbwt(a, b, h, g)**, where:<br />
 a: wavelet filter coefficients called "scale residue" at scale N per channel p (see Eq. (7) in [1])<br />
 b: wavelet filter coefficients called "expansion coefficients" at scales n per channel p (see Eq. (7) in [1])<br />
