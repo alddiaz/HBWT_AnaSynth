@@ -38,9 +38,9 @@ def up_fir_down(x, h, L, M):
 		temp = convolve(y, h[:,0]) # First convolution
 		NC = len(h[0]) # Number of h columns
 		NF = temp.size # Size of the convolution vector
-		A = empty((NF,NC)) # Allocate matrix A
+		A = empty((NF, NC)) # Allocate matrix A
 		A[:,0] = temp # Store the first convolution
-		for k in xrange(1,NC):
+		for k in xrange(1, NC):
 			A[:,k] = convolve(y, h[:,k])
 	if M != 1:
 		A = downsampling(A, M) # Downsampling A in factor M

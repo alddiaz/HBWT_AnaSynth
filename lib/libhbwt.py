@@ -7,15 +7,19 @@ import scipy.signal as signal
 from libfilt import*
 
 # Discrete Wavelet Transform (DWT)
-def wt(x, h, g, N):
+def dwt(x, h, g, N):
+	# Output:
+	# a: Wavelet (scale) decomposition coefficients
+	# b: Wavelet (detail) decomposition coefficients
+
 	L = len(h)-1
 	h = h/np.linalg.norm(h)
 	g = g/np.linalg.norm(g)
-	a = np.empty((N,),dtype=object)
-	b = np.empty((N,),dtype=object)
+	a = np.empty((N, ), dtype=object)
+	b = np.empty((N, ), dtype=object)
 
 	for k in xrange(0,N):
-		x = np.append(x,np.zeros(L))
+		x = np.append(x, np.zeros(L))
 		bb = signal.lfilter(g, 1, x)
 		bb = bb[1::2]
 		b[k] = bb
@@ -26,30 +30,34 @@ def wt(x, h, g, N):
 
 	return a, b
 
-# Cosine-Modulated Filter Bank (CMFB)
+# Cosine-Modulated Filter Bank (CMFB) using DCT-Type IV (DCT-IV) bases, a.k.a MDCT
 def cmfb(x, P):
+	# Output:
+	# y: P-channel filtered signal
+	# w: MDCT filter coefficients
+
 	k = np.arange(P)
-	n = np.arange(2*P)
-	n.shape = (-1,1)
-	hn = np.sin((k+.5)*np.pi/2/P)
-	hn = np.hstack((hn,hn[::-1]))
-	hn.shape = (-1,1)
+	n = np.arange(2*P).reshape(-1, 1)
+	hn = np.sin((k+0.5)*np.pi/2/P)
+	hn = np.hstack((hn, hn[::-1])).reshape(-1, 1)
 	h = hn*np.ones(P)
-	argum = (2*n+P+1)*(2*k+1)*np.pi/4/P
- 	coss = np.cos(argum)
-	w = np.sqrt(2.0/P)*h*coss
-	y = up_fir_down(x, w[::-1,:], 1, P)
+	w = np.sqrt(2.0/P)*h*np.cos((2*n+P+1)*(2*k+1)*np.pi/4/P)
+	y = up_fir_down(x,w[::-1,:], 1, P)
 
 	return y, w
 
 # Harmonic Band Wavelet Transform (HBWT)
 def hbwt(x, h, g, P, N):
-	x = x/float(pow(2,15)) # Rescaling data ('int16' type)
-	[x, w] = cmfb(x, P)
-	a = np.empty((N,P),dtype=object)
-	b = np.empty((N,P),dtype=object)
+	# Output:
+	# a: Wavelet (scale) decomposition coefficients
+	# b: Wavelet (detail) decomposition coefficients
+	# w: MDCT filter coefficients
+
+	x, w = cmfb(x, P)
+	a = np.empty((N,P), dtype=object)
+	b = np.empty((N,P), dtype=object)
 
 	for k in xrange(0,P):
-		[a[:,k], b[:,k]] = wt(x[:,k], h, g, N)
+		a[:,k], b[:,k] = dwt(x[:,k], h, g, N)
 
 	return a, b, w
