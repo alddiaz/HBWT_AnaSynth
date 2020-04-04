@@ -17,18 +17,18 @@ from scipy.signal import daub, qmf # Daubechies wavelets <br />
 from scipy.io import wavfile # WAV files <br />
 from lib.float32 import * # 'float32' input data normalization <br />
 from lib.estimatef0 import * # fundamental frequency estimation <br /> <br />
-# Load input signal <br />
+'# Load input signal <br />
 fs, x = wavfile.read('./input/qC-G4-1-tu.wav') # input signal 'x' <br />
 x, data_type = float32(x) # data normalization <br /> <br />
-# Model parameters
+'# Model parameters <br />
 h     = daub(11) # Daubechies-11 low pass filter coefficients <br />
 g     = qmf(h) # Daubechies-11 high pass filter coefficients <br />
 f0, P = estimatef0(x, fs) # f0: estimated fundamental frequency of input signal 'x' (Hertz) <br />
                           # P: estimated (integer) signal period (given in number of samples) <br />
 N = 5 # levels of wavelet decomposition <br /> <br />
-# Analysis step
+'# Analysis step <br />
 a, b, cmfb = HBWT_Ana.hbwt(x, h, g, P, N) <br /> <br />
-# Synthesis step
+'# Synthesis step <br />
 y = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y' <br />
 y = ifloat32(x, data_type) # Data back normalization <br />
 wavfile.write('./output/synth_sig.wav', fs, y) # write WAV output file
