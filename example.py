@@ -7,18 +7,21 @@ import lib.libihbwt as HBWT_Synth # HBWT Synthesis
 from scipy.signal import daub, qmf # Daubechies wavelets
 from scipy.io import wavfile # WAV files
 from lib.float32 import * # 'float32' input data normalization
-import numpy as np # (AUX) Numeric library
-import matplotlib.pyplot as plt # (AUX) Graphics library
+from lib.estimatef0 import * # fundamental frequency estimation
+import numpy as np # (AUX) numeric library
+import matplotlib.pyplot as plt # (AUX) graphics library
+import os as os # (AUX) operating system commands
 
 # Load input signal
-fs, x = wavfile.read('./input/qC-G4-1-tu.wav') # Input signal 'x'
-x, data_type = float32(x) # Data normalization
+fs, x = wavfile.read('./input/qC-G4-1-tu.wav') # input signal 'x'
+x, data_type = float32(x) # data normalization
 
 # Model parameters
-h = daub(11) # Daubechies-11 low pass filter coefficients
-g = qmf(h) # # Daubechies-11 high pass filter coefficients
-P = int(394.5) # Estimated (integer) signal period (given in number of samples)
-N = 5 # Levels of wavelet decomposition
+h       = daub(11) # Daubechies-11 low pass filter coefficients
+g       = qmf(h) # Daubechies-11 high pass filter coefficients
+f0, P   = estimatef0(x, fs) # f0: estimated fundamental frequency of input signal 'x' (Hertz)
+                            # P: estimated (integer) signal period (given in number of samples)
+N = 5 # levels of wavelet decomposition
 
 # Analysis step
 a, b, cmfb = HBWT_Ana.hbwt(x, h, g, P, N)
@@ -28,58 +31,77 @@ y = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y'
 y = ifloat32(x, data_type) # Data back normalization
 wavfile.write('./output/synth_sig.wav', fs, y) # write WAV output file
 
-### 5. GRAFICOS
-t = np.arange(len(x))/float(fs) # Time vector (seconds)
-
-# Power of input signal x[n] in dB
-x_dB = 10*np.log10(x*x)
+## Plots
 plt.ion()
+plt.close('all')
+
+# Input signal x[n]
 plt.figure(1)
-plt.plot(t,x_dB)
+plt.plot(np.arange(len(x))/float(fs), x, 'b')
 plt.title('Signal x(t)')
 plt.xlabel('Time (s)')
-plt.ylabel('Amplitude (dB)')
+plt.ylabel('Amplitude')
+plt.tight_layout()
 
-# DFT magnitude of x[n]
-NFFT = 1024*32
-X = np.fft.fftshift(np.fft.fft(x, NFFT))
-Xmag = np.abs(X) #Spectra magnitude
-fVals = fs*np.arange(-NFFT/2, NFFT/2)/NFFT
-plt.figure()
-plt.plot(fVals, Xmag)
-
-# Spectrum magnitude of CMFB
-NN = 1024 #DFT com NN pontos
-CMFBa = np.fft.fftshift(np.fft.fft(cmfb[::-1,:], NN, axis=0)) #Espectro CMFB do banco de analise
-CMFBamag = abs(CMFBa)
-w = 2*np.pi*np.arange(-NN/2, NN/2)/NN #Frecuencia normalizada em rad
-
-fig_cmfb = plt.figure()
-ax = fig_cmfb.add_subplot(111)
-ax.plot(w,CMFBamag)
-ax.axis([0, np.pi, 0, 4])
-ax.xaxis.grid(True)
-ax.yaxis.grid(False)
-
-unit   = 2*np.pi/P
-x_tick = np.arange(0, np.pi+unit, unit) #Valores a mostrar no eixo x
-x_label = [r"$0$", r"$\pi/7$", r"$2\pi/7$", r"$3\pi/7$", r"$4\pi/7}$", r"$5\pi/7$", r"$6\pi/7$", r"$\pi$"] #Etiqueta formatada para os valores do eixo x
+# DFT spectrum magnitude
+NFFT    = 32*1024
+X       = np.fft.fftshift(np.fft.fft(x, NFFT))
+Xmag    = np.abs(X[NFFT/2:]) # DFT spectrum
+fVals   = fs*np.arange(NFFT/2)/NFFT
+fig_dft     = plt.figure(2)
+ax          = fig_dft.add_subplot(111)
+x_tick      = f0*np.arange(0, int(fVals[-1]/f0)) # x axis labels
+x_label     = [ r"$0$" ]
+x_label.extend([ r"$f"+str(i)+"$" for i in range(0, int(fVals[-1]/f0)) ])
+plt.plot(fVals, Xmag, 'b')
 ax.set_xticks(x_tick)
-ax.set_xticklabels(x_label, fontsize=14)
-
-plt.title('Banco de filtros Cosseno Modulado')
-plt.xlabel('Frequencia normalizada')
+ax.set_xticklabels(x_label, fontsize=10)
+plt.xlim([ 0, 6*f0 ]) # limited number of harmonics
+ax.xaxis.grid(True)
+plt.title('Signal x(t) - Magnitude spectrum, f0 = '+str(np.round(f0,1))+" Hz")
+plt.xlabel('Frequency (Hz)')
 plt.ylabel('Magnitude')
-plt.show()
+plt.tight_layout()
 
-## Filtros H(z) e G(z)
-fig_wavfil = plt.figure()
-Cesc = np.fft.fftshift(np.fft.fft(g, NN));
-Cwav = np.fft.fftshift(np.fft.fft(h, NN));
-Cescmag = abs(Cesc); #Magnitude do espectro
-Cwavmag = abs(Cwav);
-w = 2*np.pi*np.arange(-NN/2, NN/2)/NN; #Frequencia normalizada digital w
-plt.plot(w, Cescmag, 'b', w, Cwavmag, 'm');
+# CMFB magnitude spectrum
+CMFB    = np.fft.fftshift(np.fft.fft(cmfb[::-1,:], NFFT, axis=0))
+CMFBmag = abs(CMFB[NFFT/2:]) # CMFB spectrum
+omega   = 2*np.pi*np.arange(NFFT/2)/NFFT # Normalized frequency in rad
+fig_cmfb    = plt.figure(3)
+ax          = fig_cmfb.add_subplot(111)
+x_tick      = np.pi*np.arange(0,P+1)/P # x axis labels
+x_label     = [ r"$0$", r"$\pi/"+str(P)+"$" ]
+x_label.extend([ r"$"+str(i)+"\pi/"+str(P)+"$" for i in range(2, P) ])
+x_label.extend([ r"$\pi$" ])
+ax.plot(omega, CMFBmag)
+ax.set_xticks(x_tick)
+ax.set_xticklabels(x_label, fontsize=10)
+ax.axis([ 0, 8*np.pi/P, 0, 1.1*CMFBmag.max() ]) # limited spectrum
+ax.xaxis.grid(True)
+plt.title('Cosine-Modulated Filter Bank spectrum, P = '+str(P)+' channels')
+plt.xlabel('Normalized frequency (rad)')
+plt.ylabel('Magnitude')
+plt.tight_layout()
 
-### TOCAR O SINAL
-#!play test.wav
+# DWT spectrum of filters H(z) and G(z)
+DWTlo       = np.fft.fftshift(np.fft.fft(h, NFFT)) # DWT low pass filter
+DWThi       = np.fft.fftshift(np.fft.fft(g, NFFT)) # DWT high pass filter
+DWTlomag    = abs(DWTlo[NFFT/2:]) # DWT magnitude low pass filter
+DWThimag    = abs(DWThi[NFFT/2:])
+omega       = 2*np.pi*np.arange(NFFT/2)/NFFT # Normalized frequency in rad
+fig_dwt     = plt.figure(4)
+ax          = fig_dwt.add_subplot(111)
+x_tick      = np.pi*np.arange(0,3)/2 # x axis labels
+x_label     = [ r"$0$", r"$\pi/2$", r"$\pi$" ]
+plt.plot(omega, DWTlomag, 'b', omega, DWThimag, 'm')
+ax.set_xticks(x_tick)
+ax.set_xticklabels(x_label, fontsize=10)
+ax.axis([ 0, np.pi, 0, 1.1*DWTlomag.max() ]) # limited spectrum
+ax.xaxis.grid(True)
+plt.title('Discrete Wavelet Transform spectrum')
+plt.xlabel('Normalized frequency (rad)')
+plt.ylabel('Magnitude')
+plt.tight_layout()
+
+# Play the reconstructed signal
+os.system('play ./output/synth_sig.wav')

@@ -8,6 +8,35 @@ https://www.ntnu.edu/documents/1001201110/1266017954/DAFx-15_submission_74_v3.pd
 <br />
 [2] A. A. Díaz Salazar, "HBWT_AnaSynth", Campinas, Brazil, 2015.
 
+# Example
+Read **example.py**.
+
+> import lib.libhbwt as HBWT_Ana # HBWT Analysis
+import lib.libihbwt as HBWT_Synth # HBWT Synthesis
+from scipy.signal import daub, qmf # Daubechies wavelets
+from scipy.io import wavfile # WAV files
+from lib.float32 import * # 'float32' input data normalization
+from lib.estimatef0 import * # fundamental frequency estimation
+
+> # Load input signal
+fs, x = wavfile.read('./input/qC-G4-1-tu.wav') # input signal 'x'
+x, data_type = float32(x) # data normalization
+
+> # Model parameters
+h     = daub(11) # Daubechies-11 low pass filter coefficients
+g     = qmf(h) # Daubechies-11 high pass filter coefficients
+f0, P = estimatef0(x, fs) # f0: estimated fundamental frequency of input signal 'x' (Hertz)
+                          # P: estimated (integer) signal period (given in number of samples)
+N = 5 # levels of wavelet decomposition
+
+> # Analysis step
+a, b, cmfb = HBWT_Ana.hbwt(x, h, g, P, N)
+
+> # Synthesis step
+y = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y'
+y = ifloat32(x, data_type) # Data back normalization
+wavfile.write('./output/synth_sig.wav', fs, y) # write WAV output file
+
 # Methods
 - Analysis step
 1. From **libhbwt.py** file (the direct HBWT transform, as in Section 2.2 in [1]) you will find the function **hbwt(x, h, g, P, N)**, where:<br />
