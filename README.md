@@ -18,7 +18,7 @@ from scipy.io import wavfile # WAV files
 from lib.float32 import * # 'float32' input data normalization
 from lib.estimatef0 import * # fundamental frequency estimation
 
-> '# Load input signal
+> #' Load input signal
 fs, x = wavfile.read('./input/qC-G4-1-tu.wav') # input signal 'x'
 x, data_type = float32(x) # data normalization
 
