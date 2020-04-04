@@ -22,10 +22,10 @@ def ifloat32(x, data_type):
         if data_type != 'float32':
             bit_res = [digit for digit in data_type if digit.isdigit()]
             bits = int(''.join(map(str, bit_res)))
-            y = (x/2.0+0.5)*float(pow(2,bits)-1)-pow(2,bits-1)
-            y = y.astype(data_type)
+            x = (x/2.0+0.5)*float(pow(2,bits)-1)-pow(2,bits-1)
+            x = x.astype(data_type)
     else:
-        y = (x/2.0+0.5)*float(pow(2,8)-1)
-        y = y.astype('uint8')
+        x = (x/2.0+0.5)*float(pow(2,8)-1)
+        x = x.astype('uint8')
 
-    return y
+    return x
