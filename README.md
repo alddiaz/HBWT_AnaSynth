@@ -11,14 +11,14 @@ https://www.ntnu.edu/documents/1001201110/1266017954/DAFx-15_submission_74_v3.pd
 # Example
 Read **example.py**.
 
-> import lib.libhbwt as HBWT_Ana # HBWT Analysis
-import lib.libihbwt as HBWT_Synth # HBWT Synthesis
-from scipy.signal import daub, qmf # Daubechies wavelets
-from scipy.io import wavfile # WAV files
-from lib.float32 import * # 'float32' input data normalization
-from lib.estimatef0 import * # fundamental frequency estimation
+> import lib.libhbwt as HBWT_Ana # HBWT Analysis <br />
+import lib.libihbwt as HBWT_Synth # HBWT Synthesis <br />
+from scipy.signal import daub, qmf # Daubechies wavelets <br />
+from scipy.io import wavfile # WAV files <br />
+from lib.float32 import * # 'float32' input data normalization <br />
+from lib.estimatef0 import * # fundamental frequency estimation <br />
 
-> #' Load input signal
+> # Load input signal
 fs, x = wavfile.read('./input/qC-G4-1-tu.wav') # input signal 'x'
 x, data_type = float32(x) # data normalization
 
