@@ -30,7 +30,7 @@ N = 5 # levels of wavelet decomposition <br /> <br />
 a, b, cmfb = HBWT_Ana.hbwt(x, h, g, P, N) <br /> <br />
 '# Synthesis step <br />
 y = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y' <br />
-y = ifloat32(x, data_type) # Data back normalization <br />
+y = ifloat32(y, data_type) # Data back normalization <br />
 wavfile.write('./output/synth_sig.wav', fs, y) # write WAV output file
 
 # Methods
@@ -49,7 +49,7 @@ b: wavelet filter coefficients called "expansion coefficients" at scales n per c
 h: low pass wavelet filter coefficients (the same used in Step 1).<br />
 g: high pass wavelet filter coefficients (the same used in Step 1)<br />
 
-# Reference
+# References
 [1] A. A. Díaz Salazar, R. S. Mendes, "**Analysis/Synthesis Of The Andean Quena Via Harmonic Band Wavelet Transform**", In: Proceedings of the 18th International Conference on Digital Audio Effects (DAFx-15), 2015, pp. 1–4.<br />
 [Online.](https://www.ntnu.edu/documents/1001201110/1266017954/DAFx-15_submission_74_v3.pdf)<br />
 [2] A. A. Díaz Salazar, "HBWT_AnaSynth", Campinas, Brazil, 2015. <br />
