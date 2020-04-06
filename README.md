@@ -25,8 +25,7 @@ xn, data_type = float32(x) # data type normalization <br /><br />
 '# Model parameters <br />
 h     = daub(11) # Daubechies-11 low pass filter coefficients <br />
 g     = qmf(h) # Daubechies-11 high pass filter coefficients <br />
-f0, P = estimatef0(xn, fs) # f0: fundamental frequency (Hz) <br />
-                           # P: signal period <br />
+f0, P = estimatef0(xn, fs) # f0: fundamental frequency (Hz), P: signal period <br />
 N     = 5 # levels of wavelet decomposition <br /><br />
 '# Analysis step <br />
 a, b, cmfb = HBWT_Ana.hbwt(x, h, g, P, N) # decomposition coefficients 'a' and 'b' <br /><br />
