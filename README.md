@@ -10,28 +10,28 @@ https://www.ntnu.edu/documents/1001201110/1266017954/DAFx-15_submission_74_v3.pd
 [3] A. A. Díaz Salazar, “Análise de instrumentos musicais através do expoente Hurst de banda harmônica: Estudo comparativo da Quena e de outros instrumentos de sopro”, University of Campinas, 2015.
 
 # Example
-Run **example.py**.
+Run <**example.py**>.
 
 > import lib.libhbwt as HBWT_Ana # HBWT Analysis <br />
 import lib.libihbwt as HBWT_Synth # HBWT Synthesis <br />
 from scipy.signal import daub, qmf # Daubechies wavelets <br />
 from scipy.io import wavfile # WAV files <br />
 from lib.float32 import * # 'float32' input data type normalization <br />
-from lib.estimatef0 import * # fundamental frequency estimation <br /> <br />
+from lib.estimatef0 import * # fundamental frequency estimation <br /><br />
 '# Load input signal <br />
 filename = 'quena_G4'
 fs, x = wavfile.read('./input/'+filename+'.wav') # input signal 'x' <br />
-xn, data_type = float32(x) # data type normalization <br /> <br />
+xn, data_type = float32(x) # data type normalization <br /><br />
 '# Model parameters <br />
 h     = daub(11) # Daubechies-11 low pass filter coefficients <br />
 g     = qmf(h) # Daubechies-11 high pass filter coefficients <br />
 f0, P = estimatef0(xn, fs) # f0: fundamental frequency (Hz) <br />
                            # P: signal period <br />
-N     = 5 # levels of wavelet decomposition <br /> <br />
+N     = 5 # levels of wavelet decomposition <br /><br />
 '# Analysis step <br />
-a, b, cmfb = HBWT_Ana.hbwt(x, h, g, P, N) <br /> <br />
+a, b, cmfb = HBWT_Ana.hbwt(x, h, g, P, N) <br /><br />
 '# Synthesis step <br />
-yn = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y' <br />
+yn = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y' <br /><br />
 '# Write output signal <br />
 yn = yn[:len(x)] # prune ending zeros <br />
 y = ifloat32(yn, data_type) # data back normalization <br />
