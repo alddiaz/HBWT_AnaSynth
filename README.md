@@ -9,31 +9,31 @@ Python implementation of the Harmonic Band Wavelet Transform (HBWT).<br />
 
 # Example
 Run <**example.py**>.
-
-> import lib.libhbwt as HBWT_Ana # HBWT Analysis <br />
-import lib.libihbwt as HBWT_Synth # HBWT Synthesis <br />
-from scipy.signal import daub, qmf # Daubechies wavelets <br />
-from scipy.io import wavfile # WAV files <br />
-from lib.float32 import * # 'float32' input data type normalization <br />
-from lib.estimatef0 import * # fundamental frequency estimation <br /><br />
-'# Load input signal <br />
-filename = 'quena_G4' <br />
-fs, x = wavfile.read('./input/'+filename+'.wav') # input signal 'x' <br />
-xn, data_type = float32(x) # data type normalization <br /><br />
-'# Model parameters <br />
-h     = daub(11) # Daubechies-11 low pass filter coefficients <br />
-g     = qmf(h) # Daubechies-11 high pass filter coefficients <br />
-f0, P = estimatef0(xn, fs) # f0: fundamental frequency (Hz), P: signal period <br />
-N     = 5 # levels of wavelet decomposition <br /><br />
-'# Analysis step <br />
-a, b, cmfb = HBWT_Ana.hbwt(xn, h, g, P, N) # decomposition coefficients 'a' and 'b' <br /><br />
-'# Synthesis step <br />
-yn = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y' <br /><br />
-'# Write output signal <br />
-yn = yn[:len(x)] # prune ending zeros <br />
-y = ifloat32(yn, data_type) # data back normalization <br />
+```python
+import lib.libhbwt as HBWT_Ana # HBWT Analysis
+import lib.libihbwt as HBWT_Synth # HBWT Synthesis
+from scipy.signal import daub, qmf # Daubechies wavelets
+from scipy.io import wavfile # WAV files
+from lib.float32 import * # 'float32' input data type normalization
+from lib.estimatef0 import * # fundamental frequency estimation
+# Load input signal
+filename = 'quena_G4'
+fs, x = wavfile.read('./input/'+filename+'.wav') # input signal 'x'
+xn, data_type = float32(x) # data type normalization
+# Model parameters
+h     = daub(11) # Daubechies-11 low pass filter coefficients
+g     = qmf(h) # Daubechies-11 high pass filter coefficients
+f0, P = estimatef0(xn, fs) # f0: fundamental frequency (Hz), P: signal period
+N     = 5 # levels of wavelet decomposition
+# Analysis step
+a, b, cmfb = HBWT_Ana.hbwt(xn, h, g, P, N) # decomposition coefficients 'a' and 'b'
+# Synthesis step
+yn = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y'
+# Write output signal
+yn = yn[:len(x)] # prune ending zeros
+y = ifloat32(yn, data_type) # data back normalization
 wavfile.write('./output/'+filename+'_synth.wav', fs, y) # write WAV output file
-
+```
 # Methods
 - Analysis step
 1. From **libhbwt.py** file (the direct HBWT transform, as in Section 2.2 in [1]) you will find the function **hbwt(x, h, g, P, N)**, where:<br />
