@@ -19,7 +19,7 @@ from scipy.io import wavfile # WAV files <br />
 from lib.float32 import * # 'float32' input data type normalization <br />
 from lib.estimatef0 import * # fundamental frequency estimation <br /><br />
 '# Load input signal <br />
-filename = 'quena_G4'
+filename = 'quena_G4' <br />
 fs, x = wavfile.read('./input/'+filename+'.wav') # input signal 'x' <br />
 xn, data_type = float32(x) # data type normalization <br /><br />
 '# Model parameters <br />

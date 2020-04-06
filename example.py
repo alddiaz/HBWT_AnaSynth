@@ -26,7 +26,7 @@ f0, P = estimatef0(xn, fs) # f0: estimated fundamental frequency of input signal
 N     = 5 # levels of wavelet decomposition
 
 # Analysis step
-a, b, cmfb = HBWT_Ana.hbwt(xn, h, g, P, N)
+a, b, cmfb = HBWT_Ana.hbwt(xn, h, g, P, N) # decomposition coefficients 'a' and 'b'
 
 # Synthesis step
 yn = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y'
