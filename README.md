@@ -31,7 +31,7 @@ a, b, cmfb = HBWT_Ana.hbwt(xn, h, g, P, N) # decomposition coefficients 'a' and 
 yn = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y'
 # Write ouput signal
 yn = yn[:len(x)] # prune ending zeros [TODO: can you avoid this nuisance step inside HBWT filtering?]
-y = ifloat32(yn, data_type) # data type back normalization
+y  = ifloat32(yn, data_type) # data type back normalization
 wavfile.write('./output/'+filename+'_synth.wav', fs, y) # write WAV output file
 ```
 
