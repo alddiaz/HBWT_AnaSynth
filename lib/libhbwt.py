@@ -1,6 +1,6 @@
 # Inverse HBWT library
 # Developed by Aldo Diaz
-# University of Campinas, 2015
+# University of Campinas, 2020
 
 import numpy as np
 import scipy.signal as signal
@@ -18,13 +18,13 @@ def dwt(x, h, g, N):
 	a = np.empty((N, ), dtype=object)
 	b = np.empty((N, ), dtype=object)
 
-	for k in xrange(0,N):
+	for k in xrange(0, N):
 		x = np.append(x, np.zeros(L))
 		bb = signal.lfilter(g, 1, x)
-		bb = bb[1::2]
+		bb = downsampling(bb, 2, 1) # odd indexes
 		b[k] = bb
 		x = signal.lfilter(h, 1, x)
-		x = x[1::2]
+		x = downsampling(x, 2, 1) # odd indexes
 
 	a[k] = x
 
@@ -42,7 +42,7 @@ def cmfb(x, P):
 	hn = np.hstack((hn, hn[::-1])).reshape(-1, 1)
 	h = hn*np.ones(P)
 	w = np.sqrt(2.0/P)*h*np.cos((2*n+P+1)*(2*k+1)*np.pi/4/P)
-	y = up_fir_down(x,w[::-1,:], 1, P)
+	y = up_fir_down(x, w[::-1, :], 1, P)
 
 	return y, w
 
@@ -54,10 +54,10 @@ def hbwt(x, h, g, P, N):
 	# w: MDCT filter coefficients
 
 	x, w = cmfb(x, P)
-	a = np.empty((N,P), dtype=object)
-	b = np.empty((N,P), dtype=object)
+	a = np.empty((N, P), dtype=object)
+	b = np.empty((N, P), dtype=object)
 
 	for k in xrange(0,P):
-		a[:,k], b[:,k] = dwt(x[:,k], h, g, N)
+		a[:, k], b[:, k] = dwt(x[:, k], h, g, N)
 
 	return a, b, w

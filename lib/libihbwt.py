@@ -1,6 +1,6 @@
 # HBWT library
 # Developed by Aldo Diaz
-# University of Campinas, 2015
+# University of Campinas, 2020
 
 import numpy as np
 import scipy.signal as signal
@@ -29,8 +29,10 @@ def idwt(a, b, h, g):
 			aa = aa[0:Lbb]
 		aa = upsampling(aa, 2)
 		aa = signal.lfilter(h, 1, aa)
-		y = aa + bb
-		y = y[L-1:]
+		aa = aa + bb
+		aa = aa[L-1:]
+
+	y = aa
 
 	return y
 
@@ -46,12 +48,12 @@ def icmfb(y, P):
 	hn = np.hstack((hn, hn[::-1])).reshape(-1, 1)
 	h = hn*np.ones(P)
 	w = np.sqrt(2.0/P)*h*np.cos((2*n+P+1)*(2*k+1)*np.pi/4/P)
-	x = up_fir_down(y[:,0], w[:,0], P, 1)
+	x = up_fir_down(y[:, 0], w[:, 0], P, 1)
 
 	x = x[2*P-1:]
 
 	for k in xrange(1, P):
-		xx = up_fir_down(y[:,k], w[:,k], P, 1)
+		xx = up_fir_down(y[:, k], w[:, k], P, 1)
 		x = xx[2*P-1:] + x
 
 	return x, w
@@ -64,12 +66,12 @@ def ihbwt(a, b, h, g):
 
 	P = len(a[0])
 	y = idwt(a[:,0], b[:,0], h, g)
-	N = y.size
-	aa = np.empty((N,P), dtype=object)
+	N = len(y)
+	aa = np.empty((N, P), dtype=object)
 	aa[:,0] = y
 
 	for k in xrange(1, P):
-		aa[:,k] = idwt(a[:,k], b[:,k], h, g)
+		aa[:, k] = idwt(a[:, k], b[:, k], h, g)
 
 	x, w = icmfb(aa, P)
 

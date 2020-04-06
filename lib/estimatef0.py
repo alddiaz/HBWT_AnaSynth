@@ -1,12 +1,13 @@
 # Fundamental frequency estimation
+# N.B.: Fundamental frequency given by the maximum of all harmonics
+#
 # Developed by Aldo Diaz
-# University of Campinas, 2015
+# University of Campinas, 2020
 
 import numpy as np # numeric library
 import operator as operator
 
 def estimatef0(x, fs):
-	## f0 estimation
 	# Input:
 	# x: input signal
 	# fs: sampling frequency
@@ -14,7 +15,7 @@ def estimatef0(x, fs):
 	# Output:
 	# f0: estimated fundamental frequency
 
-	# 1.  Determining the number of DFT points
+	# 1.  Determining DFT point resolution
 	j 	= 1
 	NN	= 1
 	while(x.size > NN):

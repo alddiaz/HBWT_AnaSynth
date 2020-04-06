@@ -2,35 +2,39 @@
 Python implementation of the Harmonic Band Wavelet Transform (HBWT).<br />
 **N.B.:** Only **WAV format** files are supported!
 
-**Please cite these paper and software if you use HBWT_AnaSynth in your research:**<br />
+**Please cite these works and software if you use HBWT_AnaSynth in your research:**<br />
 [1] A. A. Díaz Salazar, R. S. Mendes, "Analysis/Synthesis Of The Andean Quena Via Harmonic Band Wavelet Transform", In: Proceedings of the 18th International Conference on Digital Audio Effects (DAFx-15), 2015, pp. 1–4.<br />
 https://www.ntnu.edu/documents/1001201110/1266017954/DAFx-15_submission_74_v3.pdf
 <br />
-[2] A. A. Díaz Salazar, "HBWT_AnaSynth", Campinas, Brazil, 2015.
+[2] A. A. Díaz Salazar, "HBWT_AnaSynth", Campinas, Brazil, 2015. <br />
+[3] A. A. Díaz Salazar, “Análise de instrumentos musicais através do expoente Hurst de banda harmônica: Estudo comparativo da Quena e de outros instrumentos de sopro”, University of Campinas, 2015.
 
 # Example
-Read **example.py**.
+Run **example.py**.
 
 > import lib.libhbwt as HBWT_Ana # HBWT Analysis <br />
 import lib.libihbwt as HBWT_Synth # HBWT Synthesis <br />
 from scipy.signal import daub, qmf # Daubechies wavelets <br />
 from scipy.io import wavfile # WAV files <br />
-from lib.float32 import * # 'float32' input data normalization <br />
+from lib.float32 import * # 'float32' input data type normalization <br />
 from lib.estimatef0 import * # fundamental frequency estimation <br /> <br />
 '# Load input signal <br />
-fs, x = wavfile.read('./input/qC-G4-1-tu.wav') # input signal 'x' <br />
-x, data_type = float32(x) # data normalization <br /> <br />
+filename = 'quena_G4'
+fs, x = wavfile.read('./input/'+filename+'.wav') # input signal 'x' <br />
+xn, data_type = float32(x) # data type normalization <br /> <br />
 '# Model parameters <br />
 h     = daub(11) # Daubechies-11 low pass filter coefficients <br />
 g     = qmf(h) # Daubechies-11 high pass filter coefficients <br />
-f0, P = estimatef0(x, fs) # f0: estimated fundamental frequency of input signal 'x' (Hertz) <br />
-                          # P: estimated (integer) signal period (given in number of samples) <br />
-N = 5 # levels of wavelet decomposition <br /> <br />
+f0, P = estimatef0(xn, fs) # f0: fundamental frequency (Hz) <br />
+                           # P: signal period <br />
+N     = 5 # levels of wavelet decomposition <br /> <br />
 '# Analysis step <br />
 a, b, cmfb = HBWT_Ana.hbwt(x, h, g, P, N) <br /> <br />
 '# Synthesis step <br />
-y = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y' <br />
-y = ifloat32(y, data_type) # Data back normalization <br />
+yn = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y' <br />
+'# Write output signal <br />
+yn = yn[:len(x)] # prune ending zeros <br />
+y = ifloat32(yn, data_type) # data back normalization <br />
 wavfile.write('./output/synth_sig.wav', fs, y) # write WAV output file
 
 # Methods
@@ -53,4 +57,5 @@ g: high pass wavelet filter coefficients (the same used in Step 1)<br />
 [1] A. A. Díaz Salazar, R. S. Mendes, "**Analysis/Synthesis Of The Andean Quena Via Harmonic Band Wavelet Transform**", In: Proceedings of the 18th International Conference on Digital Audio Effects (DAFx-15), 2015, pp. 1–4.<br />
 [Online.](https://www.ntnu.edu/documents/1001201110/1266017954/DAFx-15_submission_74_v3.pdf)<br />
 [2] A. A. Díaz Salazar, "HBWT_AnaSynth", Campinas, Brazil, 2015. <br />
-[3] P. Polotti, G. Evangelista, "**Fractal Additive Synthesis via Harmonic-Band Wavelets**", In: Computer Music Journal, vol.25, no. 3, pp. 22–37, Mar. 2001.
+[3] A. A. Díaz Salazar, “Análise de instrumentos musicais através do expoente Hurst de banda harmônica: Estudo comparativo da Quena e de outros instrumentos de sopro”, University of Campinas, 2015. <br />
+[4] P. Polotti, G. Evangelista, "**Fractal Additive Synthesis via Harmonic-Band Wavelets**", In: Computer Music Journal, vol.25, no. 3, pp. 22–37, Mar. 2001.
