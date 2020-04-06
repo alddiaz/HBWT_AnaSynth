@@ -60,6 +60,14 @@ def icmfb(y, P):
 
 # Inverse Harmonic Band Wavelet Transform
 def ihbwt(a, b, h, g):
+	# The inverse HBWT transform, as in [1, Section 2.3]
+	#
+	# Input:
+	# a: wavelet "scale residue" coefficients at scale N per channel p (see Eq. (7) in [1])
+	# b: wavelet "expansion " coefficients at scales n per channel p (see Eq. (7) in [1])
+	# h: low pass wavelet filter coefficients
+	# g: high pass wavelet filter coefficients
+	#
 	# Output:
 	# x: Reconstructed signal
 	# w: IMDCT filter coefficients

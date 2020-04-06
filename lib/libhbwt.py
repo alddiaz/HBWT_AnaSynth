@@ -48,6 +48,15 @@ def cmfb(x, P):
 
 # Harmonic Band Wavelet Transform (HBWT)
 def hbwt(x, h, g, P, N):
+	# The direct HBWT transform, as in [1, Section 2.2]
+	#
+	# Input:
+	# x: Input signal
+	# h: Low pass wavelet filter coefficients (e.g., Daubechies order 11)
+	# g: High pass wavelet filter coefficients (e.g., Daubechies order 11)
+	# P: Number of MDCT channels or "sidebands" (matched to the period of 'x')
+	# N: Number of wavelet scales or "subbands"
+	#
 	# Output:
 	# a: Wavelet (scale) decomposition coefficients
 	# b: Wavelet (detail) decomposition coefficients
