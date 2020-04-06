@@ -29,7 +29,7 @@ f0, P = estimatef0(xn, fs) # f0: fundamental frequency (Hz) <br />
                            # P: signal period <br />
 N     = 5 # levels of wavelet decomposition <br /><br />
 '# Analysis step <br />
-a, b, cmfb = HBWT_Ana.hbwt(x, h, g, P, N) <br /><br />
+a, b, cmfb = HBWT_Ana.hbwt(x, h, g, P, N) # decomposition coefficients 'a' and 'b' <br /><br />
 '# Synthesis step <br />
 yn = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y' <br /><br />
 '# Write output signal <br />
