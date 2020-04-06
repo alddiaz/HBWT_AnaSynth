@@ -51,9 +51,7 @@ h: low pass wavelet filter coefficients (the same used in Step 1).<br />
 g: high pass wavelet filter coefficients (the same used in Step 1)<br />
 
 # References
-[1] A. A. Díaz Salazar, R. S. Mendes, "**Analysis/Synthesis Of The Andean Quena Via Harmonic Band Wavelet Transform**", In: Proceedings of the 18th International Conference on Digital Audio Effects (DAFx-15), 2015, pp. 1–4.<br />
-[Online.](https://www.ntnu.edu/documents/1001201110/1266017954/DAFx-15_submission_74_v3.pdf)<br />
+[1] A. A. Díaz Salazar, R. S. Mendes, "**Analysis/Synthesis Of The Andean Quena Via Harmonic Band Wavelet Transform**", In: Proceedings of the 18th International Conference on Digital Audio Effects (DAFx-15), 2015, pp. 1–4. [Online.](https://www.ntnu.edu/documents/1001201110/1266017954/DAFx-15_submission_74_v3.pdf)<br />
 [2] A. A. Díaz Salazar, "HBWT_AnaSynth", Campinas, Brazil, 2015. <br />
-[3] A. A. Díaz Salazar, “Análise de instrumentos musicais através do expoente Hurst de banda harmônica: Estudo comparativo da Quena e de outros instrumentos de sopro”, University of Campinas, 2015. <br />
-[Online](http://repositorio.unicamp.br/handle/REPOSIP/259746)<br />
+[3] A. A. Díaz Salazar, “Análise de instrumentos musicais através do expoente Hurst de banda harmônica: Estudo comparativo da Quena e de outros instrumentos de sopro”, University of Campinas, 2015. [Online](http://repositorio.unicamp.br/handle/REPOSIP/259746)<br />
 [4] P. Polotti, G. Evangelista, "**Fractal Additive Synthesis via Harmonic-Band Wavelets**", In: Computer Music Journal, vol.25, no. 3, pp. 22–37, Mar. 2001.
