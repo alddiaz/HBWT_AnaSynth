@@ -34,7 +34,7 @@ yn = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y' <br /><br />
 '# Write output signal <br />
 yn = yn[:len(x)] # prune ending zeros <br />
 y = ifloat32(yn, data_type) # data back normalization <br />
-wavfile.write('./output/synth_sig.wav', fs, y) # write WAV output file
+wavfile.write('./output/'+filename+'_synth.wav', fs, y) # write WAV output file
 
 # Methods
 - Analysis step
