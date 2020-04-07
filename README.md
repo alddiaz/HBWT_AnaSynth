@@ -27,7 +27,7 @@ g     = qmf(h) # Daubechies-11 high pass filter coefficients
 f0, P = estimatef0(xn, fs) # f0: fundamental frequency (Hz), P: signal period (in number of samples)
 N     = 5 # levels of wavelet decomposition
 # Analysis step
-a, b, cmfb = HBWT_Ana.hbwt(xn, h, g, P, N) # decomposition coefficients 'a' and 'b'
+a, b, w = HBWT_Ana.hbwt(xn, h, g, P, N) # HBWT decomposition coefficients 'a' and 'b' and CMFB filter bank 'w'
 # Synthesis step
 yn = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y'
 # Write ouput signal

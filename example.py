@@ -26,7 +26,7 @@ f0, P = estimatef0(xn, fs) # f0: estimated fundamental frequency of input signal
 N     = 5 # levels of wavelet decomposition
 
 # Analysis step
-a, b, cmfb = HBWT_Ana.hbwt(xn, h, g, P, N) # decomposition coefficients 'a' and 'b'
+a, b, w = HBWT_Ana.hbwt(xn, h, g, P, N) # HBWT decomposition coefficients 'a' and 'b' and CMFB filter bank 'w'
 
 # Synthesis step
 yn = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y'
@@ -44,10 +44,11 @@ plotSignal(xn, yn, fs)
 
 # DFT spectrum magnitude
 NFFT = 32*1024 # number of DFT points
-plotSignalSpectrum(x, NFFT, f0, 4.5, fs)
+k    = 4.5 # Number of signal harmonics to display
+plotSignalSpectrum(x, NFFT, f0, k, fs)
 
 # CMFB magnitude spectrum
-plotCMFBSpectrum(cmfb[::-1,:], NFFT, P, 4.5)
+plotCMFBSpectrum(w[::-1,:], NFFT, P, k)
 
 # DWT spectrum of filters H(z) and G(z)
 plotDWTSpectrum(h, g, NFFT)
