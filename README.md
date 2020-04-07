@@ -16,6 +16,7 @@ from scipy.signal import daub, qmf # Daubechies wavelets
 from scipy.io import wavfile # WAV files
 from lib.float32 import * # 'float32' input data type normalization
 from lib.estimatef0 import * # fundamental frequency estimation
+
 # Load input signal
 filename = 'quena_G4'
 fs, x = wavfile.read('./input/'+filename+'.wav') # input signal 'x'
@@ -30,7 +31,7 @@ a, b, cmfb = HBWT_Ana.hbwt(xn, h, g, P, N) # decomposition coefficients 'a' and 
 # Synthesis step
 yn = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y'
 # Write ouput signal
-yn = yn[:len(x)] # prune ending zeros [TODO: can you avoid this nuisance step inside HBWT filtering?]
+yn = yn[:len(x)] # prune ending zeros
 y  = ifloat32(yn, data_type) # data type back normalization
 wavfile.write('./output/'+filename+'_synth.wav', fs, y) # write WAV output file
 ```
