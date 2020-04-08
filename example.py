@@ -33,7 +33,7 @@ a, b, w = HBWT_Ana.hbwt(xn, h, g, P, N) # HBWT decomposition coefficients 'a' an
 yn = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y'
 
 # Write ouput signal
-# yn = yn[:len(x)] # prune ending zeros [TODO: can you avoid this nuisance step inside HBWT filtering?]
+yn = yn[:len(x)] # prune ending zeros [TODO: can you avoid this nuisance step inside HBWT filtering?]
 y = ifloat32(yn, data_type) # data type back normalization
 wavfile.write('./output/'+filename+'_synth.wav', fs, y) # write WAV output file
 
@@ -42,7 +42,7 @@ plt.ion()
 
 # Input signal x[n]
 plotSignal(xn, yn, fs)
-#
+
 # DFT spectrum magnitude
 NFFT = 32*1024 # number of DFT points
 k    = 4.5 # Number of signal harmonics to display
