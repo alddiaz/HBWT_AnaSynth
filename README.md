@@ -41,4 +41,4 @@ wavfile.write('./output/'+filename+'_synth.wav', fs, y) # write WAV output file
 [1] A. A. Díaz Salazar, R. S. Mendes, "Analysis/Synthesis Of The Andean Quena Via Harmonic Band Wavelet Transform", In: Proceedings of the 18th International Conference on Digital Audio Effects (DAFx-15), 2015, pp. 1–4. [Online](https://www.ntnu.edu/documents/1001201110/1266017954/DAFx-15_submission_74_v3.pdf).<br />
 [2] A. A. Díaz Salazar, "HBWT_AnaSynth", Campinas, Brazil, 2015. [Online](https://github.com/alddiaz/HBWT_AnaSynth). <br />
 [3] A. A. Díaz Salazar, “Analysis of musical instruments via the Harmonic Band Hurst Exponent: Comparative study of the Quena and other wind instruments” (in Portuguese), University of Campinas, 2015. [Online](http://repositorio.unicamp.br/handle/REPOSIP/259746).  <br />
-[4] P. Polotti, G. Evangelista, "Fractal Additive Synthesis via Harmonic-Band Wavelets", In: Computer Music Journal, vol.25, no. 3, pp. 22–37, Mar. 2001.
+[4] P. Polotti, G. Evangelista, "Fractal Additive Synthesis via Harmonic-Band Wavelets", In: Computer Music Journal, vol. 25, no. 3, pp. 22–37, Mar. 2001.
