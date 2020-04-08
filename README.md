@@ -18,7 +18,7 @@ from lib.float32 import * # 'float32' input data type normalization
 from lib.estimatef0 import * # fundamental frequency estimation
 
 # Load input signal
-filename = 'quena_G4'
+filename = 'quena'
 fs, x = wavfile.read('./input/'+filename+'.wav') # input signal 'x'
 if x.ndim == 2: x = x.sum(axis=1)/2 # mono audio conversion
 xn, data_type = float32(x) # data type normalization
