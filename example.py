@@ -14,8 +14,9 @@ import matplotlib.pyplot as plt # (AUX) graphics library
 import os as os # (AUX) operating system commands
 
 # Load input signal
-filename = 'quena_G4'
+filename = 'quena'
 fs, x = wavfile.read('./input/'+filename+'.wav') # input signal 'x'
+if x.ndim == 2: x = x.sum(axis=1)/2 # mono audio conversion
 xn, data_type = float32(x) # data type normalization
 
 # Model parameters
@@ -32,7 +33,7 @@ a, b, w = HBWT_Ana.hbwt(xn, h, g, P, N) # HBWT decomposition coefficients 'a' an
 yn = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y'
 
 # Write ouput signal
-yn = yn[:len(x)] # prune ending zeros [TODO: can you avoid this nuisance step inside HBWT filtering?]
+# yn = yn[:len(x)] # prune ending zeros [TODO: can you avoid this nuisance step inside HBWT filtering?]
 y = ifloat32(yn, data_type) # data type back normalization
 wavfile.write('./output/'+filename+'_synth.wav', fs, y) # write WAV output file
 
@@ -40,18 +41,18 @@ wavfile.write('./output/'+filename+'_synth.wav', fs, y) # write WAV output file
 plt.ion()
 
 # Input signal x[n]
-plotSignal(xn, yn, fs)
-
-# DFT spectrum magnitude
-NFFT = 32*1024 # number of DFT points
-k    = 4.5 # Number of signal harmonics to display
-plotSignalSpectrum(x, NFFT, f0, k, fs)
-
-# CMFB magnitude spectrum
-plotCMFBSpectrum(w[::-1,:], NFFT, P, k)
-
-# DWT spectrum of filters H(z) and G(z)
-plotDWTSpectrum(h, g, NFFT)
-
-# Play the reconstructed signal
-# os.system('play ./output/'+filename+'_synth.wav')
+# plotSignal(xn, yn, fs)
+#
+# # DFT spectrum magnitude
+# NFFT = 32*1024 # number of DFT points
+# k    = 4.5 # Number of signal harmonics to display
+# plotSignalSpectrum(x, NFFT, f0, k, fs, 'dB')
+#
+# # CMFB magnitude spectrum
+# plotCMFBSpectrum(w[::-1,:], NFFT, P, k, 'dB')
+#
+# # DWT spectrum of filters H(z) and G(z)
+# plotDWTSpectrum(h, g, NFFT, 'dB')
+#
+# # Play the reconstructed signal
+# # os.system('play ./output/'+filename+'_synth.wav')

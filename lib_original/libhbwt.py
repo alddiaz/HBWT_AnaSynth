@@ -24,10 +24,15 @@ def dwt(x, h, g, N):
 	b = np.empty((N, ), dtype=object)
 
 	for k in xrange(0, N):
-		b[k] = up_fir_dn(g, x)
-		b[k] = downsampling(b[k], 2, 1) # odd indexes
-		x = up_fir_dn(h, x)
+		x = np.append(x, np.zeros(L))
+		bb = signal.lfilter(g, 1, x)
+		b[k] = downsampling(bb, 2, 1) # odd indexes
+		x = signal.lfilter(h, 1, x)
 		x = downsampling(x, 2, 1) # odd indexes
+		# b[k] = up_fir_dn(g, x)
+		# b[k] = downsampling(b[k], 2, 1) # odd indexes
+		# x = up_fir_dn(h, x)
+		# x = downsampling(x, 2, 1) # odd indexes
 
 	a[k] = x
 

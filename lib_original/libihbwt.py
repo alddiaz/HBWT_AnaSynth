@@ -28,10 +28,14 @@ def idwt(a, b, h, g):
 		Laa = len(aa)
 		if Lbb > Laa:
 			bb = bb[0:Laa]
-		bb = up_fir_dn(bb, g, 2)
+		bb = upsampling(bb, 2)
+		bb = signal.lfilter(g, 1, bb)
+		# bb = up_fir_dn(bb, g, 2)[:-int(np.floor((len(g)-1)/2.)*2)-1]
 		if Laa > Lbb:
 			aa = aa[0:Lbb]
-		aa = up_fir_dn(aa, h, 2)
+		aa = upsampling(aa, 2)
+		aa = signal.lfilter(h, 1, aa)
+		# aa = up_fir_dn(aa, h, 2)[:-int(np.floor((len(h)-1.)/2)*2)-1]
 		aa = aa + bb
 		aa = aa[L-1:]
 
