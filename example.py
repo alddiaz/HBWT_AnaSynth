@@ -41,18 +41,18 @@ wavfile.write('./output/'+filename+'_synth.wav', fs, y) # write WAV output file
 plt.ion()
 
 # Input signal x[n]
-# plotSignal(xn, yn, fs)
+plotSignal(xn, yn, fs)
 #
-# # DFT spectrum magnitude
-# NFFT = 32*1024 # number of DFT points
-# k    = 4.5 # Number of signal harmonics to display
-# plotSignalSpectrum(x, NFFT, f0, k, fs, 'dB')
-#
-# # CMFB magnitude spectrum
-# plotCMFBSpectrum(w[::-1,:], NFFT, P, k, 'dB')
-#
-# # DWT spectrum of filters H(z) and G(z)
-# plotDWTSpectrum(h, g, NFFT, 'dB')
-#
-# # Play the reconstructed signal
-# # os.system('play ./output/'+filename+'_synth.wav')
+# DFT spectrum magnitude
+NFFT = 32*1024 # number of DFT points
+k    = 4.5 # Number of signal harmonics to display
+plotSignalSpectrum(x, NFFT, f0, k, fs, 'dB')
+
+# CMFB magnitude spectrum
+plotCMFBSpectrum(w[::-1,:], NFFT, P, k, 'dB')
+
+# DWT spectrum of filters H(z) and G(z)
+plotDWTSpectrum(h, g, NFFT, 'dB')
+
+# Play the reconstructed signal
+# os.system('play ./output/'+filename+'_synth.wav')
