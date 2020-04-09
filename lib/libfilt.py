@@ -14,8 +14,7 @@ def upsampling(x, L):
 	# Output:
 	# y: Upsampled signal
 
-	l = len(x)*L
-	y = np.zeros(l)
+	y = np.zeros(len(x)*L)
 	y[::L] = x
 
 	return y
@@ -31,14 +30,14 @@ def downsampling(x, M, FLAG=0):
 	# y: Downsampled signal
 
 	if np.mod(FLAG, 2):
-		y = x[1::M] # Downsampling using odd indexes
+		y = x[1::M] # odd indexes
 	else: # default
-		y = x[0::M] # Downsampling using even indexes
+		y = x[0::M] # even indexes
 
 	return y
 
 # Upsampling -> FIR Filtering -> Downsampling
-def up_fir_dn(x, h, L=1, M=1):
+def upfirdn(h, x, L=1, M=1):
 	# Input:
 	# x: Input signal
 	# h: Filtering matrix. The columns contain the impulse response coefficients of each filter h_k[n]
@@ -48,9 +47,9 @@ def up_fir_dn(x, h, L=1, M=1):
 	# Output:
 	# A: Filter signal array
 
-	if h.ndim == 1: # 1-D filter signal
+	if h.ndim == 1: # 1-D signal filtering
 		A = signal.upfirdn(h, x, L, M)
-	else: # Array filter signal
+	else: # Array signal filtering
 		M = h.shape[1] # Number of filter channels
 		A = np.empty((int(np.ceil(((len(x)-1.0)*L+len(h))/M)), M))
 

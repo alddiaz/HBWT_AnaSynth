@@ -3,7 +3,7 @@
 # University of Campinas, 2020
 
 import numpy as np
-from libfilt import*
+from libfilt import *
 
 # Inverse Discrete Wavelet Transform (IDWT)
 def idwt(a, b, h, g):
@@ -28,10 +28,10 @@ def idwt(a, b, h, g):
 		Laa = len(aa)
 		if Lbb > Laa:
 			bb = bb[0:Laa]
-		bb = up_fir_dn(bb, g, 2)
+		bb = upfirdn(g, bb, 2)
 		if Laa > Lbb:
 			aa = aa[0:Lbb]
-		aa = up_fir_dn(aa, h, 2)
+		aa = upfirdn(h, aa, 2)
 		aa = aa + bb
 		aa = aa[L-1:]
 
@@ -58,7 +58,7 @@ def icmfb(y, P):
 
 	x = 0
 	for k in xrange(0, P):
-		xx = up_fir_dn(y[:, k], w[:, k], P, 1)
+		xx = upfirdn(w[:, k], y[:, k], P, 1)
 		x = xx[2*P-1:] + x
 
 	return x, w

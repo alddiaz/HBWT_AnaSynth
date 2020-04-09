@@ -22,15 +22,15 @@ xn, data_type = float32(x) # data type normalization
 # Model parameters
 h     = daub(11) # Daubechies-11 low pass filter coefficients
 g     = qmf(h) # Daubechies-11 high pass filter coefficients
-f0, P = estimatef0(xn, fs) # f0: estimated fundamental frequency of input signal 'x' (Hertz)
+f0, P = estimatef0(xn, fs) # f0: estimated fundamental frequency (Hertz)
                            # P: estimated (integer) signal period (given in number of samples)
 N     = 5 # levels of wavelet decomposition
 
 # Analysis step
-a, b, w = HBWT_Ana.hbwt(xn, h, g, P, N) # HBWT decomposition coefficients 'a' and 'b' and CMFB filter bank 'w'
+a, b, w = HBWT_Ana.hbwt(xn, h, g, P, N) # HBWT decomposition 'a' and 'b' and CMFB filter bank 'w'
 
 # Synthesis step
-yn = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'y'
+yn = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'xn'
 
 # Write ouput signal
 yn = yn[:len(x)] # prune ending zeros [TODO: can you avoid this nuisance step inside HBWT filtering?]

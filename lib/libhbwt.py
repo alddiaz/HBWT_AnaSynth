@@ -3,7 +3,7 @@
 # University of Campinas, 2020
 
 import numpy as np
-from libfilt import*
+from libfilt import *
 
 # Discrete Wavelet Transform (DWT)
 def dwt(x, h, g, N):
@@ -24,9 +24,9 @@ def dwt(x, h, g, N):
 	b = np.empty((N, ), dtype=object)
 
 	for k in xrange(0, N):
-		b[k] = up_fir_dn(g, x)
+		b[k] = upfirdn(g, x)
 		b[k] = downsampling(b[k], 2, 1) # odd indexes
-		x = up_fir_dn(h, x)
+		x = upfirdn(h, x)
 		x = downsampling(x, 2, 1) # odd indexes
 
 	a[k] = x
@@ -48,7 +48,7 @@ def cmfb(x, P):
 	hn = np.sin((k+0.5)*np.pi/2/P)
 	h = np.hstack((hn, hn[::-1])).reshape(-1, 1)*np.ones(P)
 	w = np.sqrt(2.0/P)*h*np.cos((2*n+P+1)*(2*k+1)*np.pi/4/P)
-	y = up_fir_dn(x, w[::-1, :], 1, P)
+	y = upfirdn(w[::-1, :], x, 1, P)
 
 	return y, w
 
