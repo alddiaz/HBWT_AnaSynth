@@ -8,7 +8,7 @@ Python implementation of the Harmonic Band Wavelet Transform (HBWT).<br />
 [3] A. A. Díaz Salazar, “Analysis of musical instruments via the Harmonic Band Hurst Exponent: Comparative study of the Quena and other wind instruments” (in Portuguese), University of Campinas, 2015. [Online](http://repositorio.unicamp.br/handle/REPOSIP/259746).
 
 # Example
-View `ex_PR.py` for a Perfect Reconstruction** example.
+View `ex_PR.py` for Perfect Reconstruction of a signal using the HBWT.
 ```python
 import lib.libhbwt as HBWT_Ana # HBWT Analysis
 import lib.libihbwt as HBWT_Synth # HBWT Synthesis
