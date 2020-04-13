@@ -6,6 +6,7 @@ import lib.libhbwt as HBWT_Ana # HBWT Analysis
 import lib.libihbwt as HBWT_Synth # HBWT Synthesis
 from scipy.signal import daub, qmf # Daubechies wavelets
 from scipy.io import wavfile # WAV files
+from lib.stereo2mono import * # stereo to mono conversion
 from lib.float32 import * # 'float32' input data type normalization
 from lib.estimatef0 import * # fundamental frequency estimation
 from lib.libsignalplot import * # plotting library
@@ -16,7 +17,7 @@ import os as os # (AUX) operating system commands
 # Load input signal
 filename = 'quena'
 fs, x = wavfile.read('./input/'+filename+'.wav') # input signal 'x'
-if x.ndim == 2: x = x.sum(axis=1)/2 # mono audio conversion
+if x.ndim == 2: x = stereo2mono(x) # mono audio conversion
 xn, data_type = float32(x) # data type normalization
 
 # Model parameters
