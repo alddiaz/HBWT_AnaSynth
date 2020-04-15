@@ -17,10 +17,12 @@ def plotSignal(x, y, fs=1):
     plt.figure()
     plt.subplot(211)
     plt.plot(tx, x, 'b')
+    plt.xlim([ 0, tx.max() ]) # limited number of harmonics
     plt.ylabel('Amplitude')
     plt.title('Input signal x(t)')
     plt.subplot(212)
     plt.plot(ty, y, 'm')
+    plt.xlim([ 0, ty.max() ]) # limited number of harmonics
     plt.title('Reconstructed signal y(t)')
     plt.xlabel('Time (s)')
     plt.ylabel('Amplitude')
