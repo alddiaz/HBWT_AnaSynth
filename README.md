@@ -19,6 +19,7 @@ from scipy.io import wavfile # WAV files
 from lib.stereo2mono import * # stereo to mono conversion
 from lib.float32 import * # 'float32' input data type normalization
 from lib.estimatef0 import * # fundamental frequency estimation
+from IPython.display import Audio
 
 # Load input signal
 filename = 'quena'
@@ -38,6 +39,9 @@ yn = HBWT_Synth.ihbwt(a, b, h, g) # reconstructed signal 'xn'
 yn = yn[:len(x)] # prune ending zeros
 y  = ifloat32(yn, data_type) # data type back normalization
 wavfile.write('./output/'+filename+'_synth.wav', fs, y) # write WAV output file
+# Play the reconstructed signal
+audio = Audio(data=y, rate=fs)
+audio
 ```
 
 # References
