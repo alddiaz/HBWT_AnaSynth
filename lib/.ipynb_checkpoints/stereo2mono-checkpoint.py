@@ -10,7 +10,7 @@ def stereo2mono(x):
     # x: stereo audio signal
     #
     # Output:
-    # y: mono audio signal (stereo channel average)
+    # x: mono audio signal (stereo channel average)
 
     y = x.sum(axis=1)/2.0 # mono audio conversion
     y = np.around(y)
